@@ -46,19 +46,25 @@ def get_long_description():
 
 def get_ext_modules():
     ext_module = []
-    if sys.platform != "win32":  # pre-compile ops on linux
-        assert TORCH_AVAILABLE, "torch is required for pre-compiling ops, please install it first."
-        # if any other op is added, please also add it here
-        from yolox.layers import FastCOCOEvalOp
-        ext_module.append(FastCOCOEvalOp().build_op())
+    if sys.platform != "win32":
+        try:
+            import torch
+            from yolox.layers import FastCOCOEvalOp
+            ext_module.append(FastCOCOEvalOp().build_op())
+        except ImportError:
+            print("[WARNING] Torch or extensions not available; skipping custom op compilation.")
     return ext_module
-
 
 def get_cmd_class():
     cmdclass = {}
-    if TORCH_AVAILABLE:
+    try:
+        import torch
+        from torch.utils import cpp_extension
         cmdclass["build_ext"] = cpp_extension.BuildExtension
+    except ImportError:
+        print("[WARNING] Torch not available; skipping custom build_ext command.")
     return cmdclass
+
 
 
 setuptools.setup(
