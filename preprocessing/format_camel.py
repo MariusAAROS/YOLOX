@@ -4,7 +4,13 @@ import json
 import random
 
 NEW_SPLIT = False
+REMOVE_SOURCE = True
 split_path = "datasets/Camel/split.txt"
+exclude = ["train2017", "val2017", "annotations"]
+img_typ = "Vis" # IR or Vis
+dataset_name = "Camel"
+
+print(os.getcwd())
 
 if NEW_SPLIT or not os.path.exists(split_path):
     train_test_ratio = 0.8
@@ -21,10 +27,6 @@ elif not NEW_SPLIT and os.path.exists(split_path):
         train_index = list(map(int, lines[0].strip().split(": ")[1].split(", ")))
         val_index = list(map(int, lines[1].strip().split(": ")[1].split(", ")))
 
-exclude = ["train2017", "val2017", "annotations"]
-img_typ = "IR" # IR or Vis
-
-dataset_name = "Camel"
 data_path = f"datasets/{dataset_name}"
 target_path = f"datasets/{dataset_name}_{img_typ}_formatted"
 
@@ -110,3 +112,6 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                         })
                 with open(os.path.join(target_path, "annotations", f"instances_{subset_name}.json"), "w") as f:
                     json.dump(annotations, f, indent=4)
+
+if REMOVE_SOURCE:
+    shutil.rmtree(data_path)
