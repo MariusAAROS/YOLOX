@@ -22,7 +22,7 @@ elif not NEW_SPLIT and os.path.exists(split_path):
         val_index = list(map(int, lines[1].strip().split(": ")[1].split(", ")))
 
 exclude = ["train2017", "val2017", "annotations"]
-img_typ = "Vis" # IR or Vis
+img_typ = "IR" # IR or Vis
 
 dataset_name = "Camel"
 data_path = f"datasets/{dataset_name}"
@@ -68,14 +68,14 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
             if index in subset_index:
                 print(f"Processing directory: {cdir}")
                 cfiles = os.listdir(os.path.join(data_path, cdir))
-                cimgs_dir = os.path.join(data_path, cdir, f"{"Visual" if img_typ == "Vis" else "IR"}")
+                cimgs_dir = os.path.join(data_path, cdir, f"{'Visual' if img_typ == 'Vis' else 'IR'}")
                 cimgs_files = os.listdir(cimgs_dir)
                 
                 # metadata
                 with open(os.path.join(data_path, cdir, f"Seq{index}-info.txt"), "r") as f:
                     metadata = f.readlines()
                 for line in metadata:
-                    if f'{"Visual" if img_typ == "Vis" else "IR"} Resolution' in line:
+                    if f"{'Visual' if img_typ == 'Vis' else 'IR'} Resolution" in line:
                         width, height = line.split(" - ")[1].strip().split("x")
                         width, height = int(width), int(height)
                         break
