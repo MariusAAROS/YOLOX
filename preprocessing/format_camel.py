@@ -4,7 +4,7 @@ import json
 import random
 
 NEW_SPLIT = False
-REMOVE_SOURCE = True
+REMOVE_SOURCE = False
 split_path = "datasets/Camel/split.txt"
 exclude = ["train2017", "val2017", "annotations"]
 img_typ = "Vis" # IR or Vis
