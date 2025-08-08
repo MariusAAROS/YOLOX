@@ -62,6 +62,7 @@ dirs_seqs = os.listdir(data_path)
 for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val_index]):
     annotations = deepcopy(DEFAULT_ANNOTATIONS)
     id_counter = 1
+    id_annot = 1
     for cdir in dirs_seqs:
         if cdir not in exclude:
             try:
@@ -100,21 +101,22 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                         "height": height,
                     })
                     id_counter += 1
-                id_annot = 1
+                
                 for line in annots:
                     if line.strip():
                         parts = line.strip().split("\t")
-                        frame_id, object_id, object_class = map(int, parts[:3])
-                        x1, y1, w, h = map(float, parts[3:])
-                        annotations["annotations"].append({
-                            'id': id_annot,
-                            'image_id': frame_id+ids_offset,
-                            'iscrowd': 0,
-                            'bbox': [x1, y1, w, h],
-                            'area': w * h,
-                            'category_id': object_class
-                        })
-                        id_annot += 1
+                        frame_id, tracking_id, object_id = map(int, parts[:3])
+                        if object_id != 1: # Exclude non-person objects
+                            x1, y1, w, h = map(float, parts[3:])
+                            annotations["annotations"].append({
+                                'id': id_annot,
+                                'image_id': frame_id+ids_offset,
+                                'iscrowd': 0,
+                                'bbox': [x1, y1, w, h],
+                                'area': w * h,
+                                'category_id': object_id
+                            })
+                            id_annot += 1
                 with open(os.path.join(target_path, "annotations", f"instances_{subset_name}.json"), "w") as f:
                     json.dump(annotations, f, indent=4)
 
