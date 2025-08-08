@@ -105,6 +105,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                         frame_id, object_id, object_class = map(int, parts[:3])
                         x1, y1, x2, y2 = map(float, parts[3:])
                         annotations["annotations"].append({
+                            'iscrowd': 0,
                             'image_id': frame_id,
                             'bbox': [x1, y1, x2, y2],
                             'category_id': object_class,
