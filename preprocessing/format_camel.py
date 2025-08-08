@@ -117,7 +117,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                                 'category_id': object_id
                             })
                             id_annot += 1
-                with open(os.path.join(target_path, "annotations", f"instances_{subset_name}.json"), "w") as f:
+    with open(os.path.join(target_path, "annotations", f"instances_{subset_name}.json"), "w") as f:
                     json.dump(annotations, f, indent=4)
 
 if REMOVE_SOURCE:
