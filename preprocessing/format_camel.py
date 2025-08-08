@@ -51,11 +51,10 @@ DEFAULT_ANNOTATIONS = {
     "categories": [
         {
             "id": 1,
-            "name": "human",
-            "supercategory": "person"
+            "name": "person",
+            "supercategory": None
         }
-    ],
-    "type": "instances"
+    ]
 }
 
 dirs_seqs = os.listdir(data_path)
