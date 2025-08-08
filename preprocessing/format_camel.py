@@ -106,7 +106,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                     if line.strip():
                         parts = line.strip().split("\t")
                         frame_id, tracking_id, object_id = map(int, parts[:3])
-                        if object_id != 1: # Exclude non-person objects
+                        if object_id == 1: # select human-only objects
                             x1, y1, w, h = map(float, parts[3:])
                             annotations["annotations"].append({
                                 'id': id_annot,
