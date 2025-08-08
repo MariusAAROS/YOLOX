@@ -84,6 +84,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                         break
                 with open(os.path.join(data_path, cdir, f"Seq{index}-{img_typ}.txt"), "r") as f:
                     annots = f.readlines()
+                ids_offset = id_counter
                 for cimg in cimgs_files:
                     #copy image to target directory
                     new_name = f"{index}_{cimg}"
@@ -107,7 +108,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                         x1, y1, w, h = map(float, parts[3:])
                         annotations["annotations"].append({
                             'iscrowd': 0,
-                            'image_id': frame_id,
+                            'image_id': frame_id+ids_offset,
                             'bbox': [x1, y1, w, h],
                             'area': w * h,
                             'category_id': object_class,
