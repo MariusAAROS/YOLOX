@@ -2,6 +2,7 @@ import os
 import shutil
 import json
 import random
+from copy import deepcopy
 
 NEW_SPLIT = False
 REMOVE_SOURCE = False
@@ -35,7 +36,7 @@ os.makedirs(os.path.join(target_path, "train2017"), exist_ok=True)
 os.makedirs(os.path.join(target_path, "val2017"), exist_ok=True)
 os.makedirs(os.path.join(target_path, "annotations"), exist_ok=True)
 
-annotations = {
+DEFAULT_ANNOTATIONS = {
     "info": {
         "description": f"{dataset_name} {img_typ} dataset"
     },
@@ -60,6 +61,7 @@ annotations = {
 dirs_seqs = os.listdir(data_path)
 
 for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val_index]):
+    annotations = deepcopy(DEFAULT_ANNOTATIONS)
     id_counter = 1
     for cdir in dirs_seqs:
         if cdir not in exclude:
