@@ -21,7 +21,7 @@ num_classes = 1  # assuming original
 backbone = YOLOPAFPN(depth, width, in_channels=in_channels)
 checkpoint = torch.load(f"yolox/weights/yolox_{size}.pth", map_location="cpu")
 
-print(checkpoint["backbone"])
+print(checkpoint)
 # backbone = YOLOPAFPN(depth, width, in_channels=in_channels)
 # head = YOLOXHead(80, width, in_channels=in_channels)
 # model = YOLOX(backbone, head)
