@@ -50,7 +50,7 @@ DEFAULT_ANNOTATIONS = {
     "annotations": [],
     "categories": [
         {
-            "id": 1,
+            "id": 0,
             "name": "person",
             "supercategory": None
         }
@@ -114,7 +114,7 @@ for subset_name, subset_index in zip(["train2017", "val2017"], [train_index, val
                                 'iscrowd': 0,
                                 'bbox': [x1, y1, w, h],
                                 'area': w * h,
-                                'category_id': object_id
+                                'category_id': 0 # 0 for persons
                             })
                             id_annot += 1
     with open(os.path.join(target_path, "annotations", f"instances_{subset_name}.json"), "w") as f:
